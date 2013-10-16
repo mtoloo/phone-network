@@ -10,6 +10,7 @@ namespace Model
 		public long id;
 		public static Nodes nodes;
 		public long node1_id;
+		public long capacity;
 		private Node fnode1;
 		private Node fnode2;
 
@@ -41,6 +42,7 @@ namespace Model
 			this.fnode1 = new Node (true);
 			this.fnode2 = new Node (true);
 			this.distance = distance;
+			this.capacity = 1;
 		}
 
 		public Edge (long id, Node node1, Node node2, double distance)
@@ -51,6 +53,7 @@ namespace Model
 			this.node1_id = node1.id;
 			this.node2_id = node2.id;
 			this.distance = distance;
+			this.capacity = 1;
 		}
 
 		public Edge (SQLiteDataReader reader)
@@ -61,11 +64,12 @@ namespace Model
 			this.fnode1 = new Node (true);
 			this.fnode2 = new Node (true);
 			this.distance = (double)reader ["distance"];
+			this.capacity = 1;
 		}
 
 		public object[] SqlParameters ()
 		{
-			object[] result = new object[8] {
+			object[] result = new object[10] {
 				"id",
 				this.id,
 				"node1_id",
@@ -73,7 +77,9 @@ namespace Model
 				"node2_id",
 				this.node2_id,
 				"distance",
-				this.distance
+				this.distance,
+				"capacity",
+				this.capacity
 			};
 			return result;
 		}

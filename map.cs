@@ -51,16 +51,24 @@ namespace PhoneNetwork
 
 		void ShowNodeProperties (Node node)
 		{
-			NodeForm nodeForm = new NodeForm(this.nodes.FirstSelected());
+			NodeForm nodeForm = new NodeForm(node);
 			if (nodeForm.ShowDialog() == DialogResult.OK)
 				this.nodes.UpdateFirstSelected(nodeForm.node);
 		}
 
+		void ShowEdgeProperties (Edge edge)
+		{
+			EdgeForm edgeForm = new EdgeForm(edge);
+			if (edgeForm.ShowDialog() == DialogResult.OK)
+				this.edges.Update(edgeForm.edge);
+		}
 		void HandleMouseDoubleClick (object sender, MouseEventArgs e)
 		{
 			PointD location = this.MapToPoint (e.Location);
-			if (this.nodes.SelectAtPoisition(location, true)) 
+			if (this.mapMode == MapMode.EditNode && this.nodes.SelectAtPoisition(location, true))
 				this.ShowNodeProperties(this.nodes.FirstSelected());
+			if (this.mapMode == MapMode.EditEdge && this.edges.SelectAtPoisition(location, true))
+				this.ShowEdgeProperties(this.edges.FirstSelected());
 		}
 
 		public void LoadMap (long id)

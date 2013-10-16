@@ -70,10 +70,9 @@ namespace Model
 			Node node2 = this.nodes.CreateNew ("Node2", 20, 10);
 			Node node3 = this.nodes.CreateNew ("Node3", 20, 20);
 			Edge edge1 = this.edges.CreateNew (node1, node2);
-			Edge edge2 = this.edges.CreateNew (node2, node3);
+			this.edges.CreateNew (node2, node3);
 			this.edges.DeleteEdge (edge1);
 			Assert.AreEqual (1, this.edges.edges.Count);
-			Assert.AreEqual (edge2.id, this.edges.edges [0].id);
 		}
 
 		[Test]
@@ -89,6 +88,37 @@ namespace Model
 			Assert.AreEqual(1, this.edges.edges.Count);
 			var actual = this.database.ExecuteScalarQuery ("select node1_id from edges");
 			Assert.AreEqual(edge.node1.id, actual);
+		}
+
+		[Test]
+		public void selectedAtPostionTest()
+		{
+			Node node1 = this.nodes.CreateNew ("Node1", 10, 10);
+			Node node2 = this.nodes.CreateNew ("Node2", 20, 10);
+			Node node3 = this.nodes.CreateNew ("Node3", 20, 20);
+			Edge edge_1_2 = this.edges.CreateNew (node1, node2);
+			Edge edge_2_3 = this.edges.CreateNew (node2, node3);
+			this.edges.SelectAtPoisition(new PointD(15, 8), true);
+			Assert.AreEqual(edge_1_2.id, this.edges.FirstSelected().id);
+			this.edges.SelectAtPoisition(new PointD(21, 18), true);
+			Assert.AreEqual(edge_2_3.id, this.edges.FirstSelected().id);
+		}
+
+		[Test]
+		public void updateFirstSelectedTest()
+		{
+			Node node1 = this.nodes.CreateNew ("Node1", 10, 10);
+			Node node2 = this.nodes.CreateNew ("Node2", 20, 10);
+			Node node3 = this.nodes.CreateNew ("Node3", 20, 20);
+			Edge edge_1_2 = this.edges.CreateNew (node1, node2);
+			this.edges.CreateNew (node2, node3);
+			this.edges.SelectAtPoisition(new PointD(15, 8), true);
+			Assert.AreEqual(edge_1_2.id, this.edges.FirstSelected().id);
+			edge_1_2.distance = 1234;
+			this.edges.Update(edge_1_2);
+			this.edges.LoadAll();
+			double newDistance = this.edges.edges [edge_1_2.id].distance;
+			Assert.AreEqual(1234, newDistance);
 		}
 
 	}

@@ -43,22 +43,22 @@ namespace Model
 		{
 			this.model.Delete(edge.id);
 			this.edges.Remove(edge.id);
-			this.ClearSelection();
 		}
 
 		public void DeleteSelected ()
 		{
-			this.DeleteEdge(this.FirstSelected());
+			foreach (long id in this.selectedIds)
+				this.DeleteEdge(this.edges[id]);
+			this.ClearSelection();
 		}
 		//Delete all edges related to given node
 		public void DeleteNodeEdges(Node node)
 		{
-			for(int i = 0 ; i < this.edges.Count; ) {
-				Edge edge = this.edges[i];
+			foreach(Edge edge in edges.Values) {
 				if (edge.node1.id == node.id || edge.node2.id == node.id)
-					DeleteEdge(edge);
-				else i++;
+					this.selectedIds.Add(edge.id);
 			}
+			this.DeleteSelected();
 		}
 
 		public bool IsSelected (Edge edge)
@@ -110,7 +110,16 @@ namespace Model
 		{
 			this.CheckSelected ();
 			return this.edges [this.FirstSelectedId()];
+		}		
+
+		public void Update (Edge edge)
+		{
+			CheckSelected ();
+			this.model.Update(edge);
+			long id = FirstSelectedId();
+			this.edges [id] = edge;
 		}
+
 
 
 	}

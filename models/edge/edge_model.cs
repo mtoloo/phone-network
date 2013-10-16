@@ -17,7 +17,7 @@ namespace Model
 		public override void CreateTable ()
 		{
 			string sql = @"CREATE TABLE edges(id INTEGER PRIMARY KEY AUTOINCREMENT, node1_id INTEGER,
-node2_id INTEGER, distance FLOAT, 
+node2_id INTEGER, distance FLOAT, capacity INTEGER,
  FOREIGN KEY(node1_id) REFERENCES nodes(id) ON DELETE CASCADE,
  FOREIGN KEY(node2_id) REFERENCES nodes(id) ON DELETE CASCADE);";
 			this.database.ExecuteNonQuery (sql);
