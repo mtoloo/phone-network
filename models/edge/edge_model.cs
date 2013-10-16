@@ -23,7 +23,7 @@ node2_id INTEGER, distance FLOAT,
 			this.database.ExecuteNonQuery (sql);
 		}
 
-		public Edge[] Select (Nodes nodes)
+		public Edge[] Select ()
 		{
 			int count;
 			SQLiteDataReader reader = this.SelectReader(out count);

@@ -64,6 +64,8 @@
     <Compile Include="map.cs" />
     <Compile Include="forms\node_form.cs" />
     <Compile Include="main_form.cs" />
+    <Compile Include="tests\model\edge_data_test.cs" />
+    <Compile Include="models\pointd.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.SQLite">

@@ -42,8 +42,12 @@ namespace Model
 		[Test]
 		public void LoadAllTest() 
 		{
-
-			this.edges.LoadAll(nodes);
+			Node node1 = this.nodes.CreateNew("Node1", 10, 10);
+			Node node2 = this.nodes.CreateNew("Node2", 20, 10);
+			Edge edge = this.edges.CreateNew(node1, node2);
+			this.edges.LoadAll();
+			Assert.AreEqual(node1.id, this.edges.edges[edge.id].node1.id);
+			Assert.AreEqual(node2.name, this.edges.edges[edge.id].node2.name);
 		}
 
 		[Test]

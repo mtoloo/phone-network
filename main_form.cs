@@ -80,7 +80,7 @@ public class MainForm : Form
 
 		status.Text = "Data...";
 		this.nodes.LoadAll();
-		this.edges.LoadAll(this.nodes);
+		this.edges.LoadAll();
 		status.Text = "Ready";
 	}
 

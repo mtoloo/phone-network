@@ -1,25 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MainForm.cs">
-    <Files>
-      <File FileName="models/base/model.cs" Line="47" Column="4" />
-      <File FileName="models/base/database.cs" Line="64" Column="28" />
-      <File FileName="models/base/data.cs" Line="9" Column="3" />
-      <File FileName="models/edge/edge_data.cs" Line="3" Column="14" />
-      <File FileName="models/edge/edge_model.cs" Line="13" Column="41" />
-      <File FileName="models/map/map_model.cs" Line="12" Column="40" />
-      <File FileName="models/node/node_model.cs" Line="10" Column="23" />
-      <File FileName="tests/map_test.cs" Line="7" Column="23" />
-      <File FileName="map.cs" Line="9" Column="11" />
-      <File FileName="MainForm.cs" Line="105" Column="3" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="phone-network" expanded="True">
-            <Node name="models" expanded="True" />
-            <Node name="tests" expanded="True" />
-            <Node name="MainForm.cs" selected="True" />
+            <Node name="models" expanded="True">
+              <Node name="edge" expanded="True">
+                <Node name="edge_data.cs" selected="True" />
+              </Node>
+              <Node name="map" expanded="True" />
+              <Node name="node" expanded="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
@@ -30,19 +22,18 @@
         <State />
       </Pad>
       <Pad Id="ConnectionManagerPad">
-        <State expanded="True">
-          <Node name="NodeTest" expanded="True">
-            <Node name="Tables" selected="True" />
-          </Node>
-          <Node name="Simban" expanded="True">
-            <Node name="Tables" expanded="True">
-              <Node name="nodes" expanded="True" />
-            </Node>
-          </Node>
+        <State expanded="True" selected="True">
+          <Node name="NodeTest" expanded="True" />
+          <Node name="Simban" expanded="True" />
         </State>
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True" selected="True">
+          <Node name="phone-network" expanded="True">
+            <Node name="Model" expanded="True" />
+            <Node name="PhoneNetwork" expanded="True" />
+          </Node>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

@@ -4,16 +4,6 @@ using System.Drawing;
 
 namespace Model
 {
-	public struct PointD {
-		public double X, Y;
-		public PointD (double x, double y)
-		{
-			this.X = x;
-			this.Y = y;
-		}
-
-	}
-
 	public class Nodes
 	{
 //		Database database;

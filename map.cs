@@ -98,6 +98,12 @@ namespace PhoneNetwork
 			case MapMode.NewEdgeSecondNode:
 				this.NewEdgeSecondNode(location);
 				break;
+			case MapMode.EditEdge:
+				this.EditEdge(location);
+				break;
+			case MapMode.DeleteEdge:
+				this.DeleteEdge(location);
+				break;
 			}
 			Invalidate ();
 		}
@@ -119,7 +125,7 @@ namespace PhoneNetwork
 				if (confirm == DialogResult.Yes){
 					this.nodes.DeleteSelected();
 					this.nodes.LoadAll();
-					this.edges.LoadAll(this.nodes);
+					this.edges.LoadAll();
 					Invalidate();
 				}
 			}
@@ -178,20 +184,44 @@ namespace PhoneNetwork
 			}
 		}
 
+		void EditEdge (PointD location)
+		{
+			this.edges.SelectAtPoisition(location, true);
+		}
+
+		void DeleteEdge (PointD location)
+		{
+			if (this.edges.SelectAtPoisition(location, true))
+			{
+				Invalidate();
+				Edge edge = this.edges.FirstSelected();
+				DialogResult confirm = MessageBox.Show ("Delete the edge between " + edge.node1.name + " and " + edge.node2.name + "?", "Confrim delete", MessageBoxButtons.YesNo);
+				if (confirm == DialogResult.Yes){
+					this.edges.DeleteSelected();
+					this.edges.LoadAll();
+					Invalidate();
+				}
+			}
+		}
+
+		void DrawEdge (Edge edge, ref PaintEventArgs pe)
+		{
+			System.Drawing.Pen pen = new System.Drawing.Pen (Color.Blue);
+			if (this.edges.IsSelected(edge))
+			    pen.Color = Color.Red;
+			pe.Graphics.DrawLine (pen, this.NodePointOnMap (edge.node1.left, edge.node1.top), this.NodePointOnMap (edge.node2.left, edge.node2.top));
+		}
+
 		protected override void OnPaint (PaintEventArgs pe)
 		{
 			base.OnPaint (pe);
 			if (this.Image == null)
 				return;
-			foreach (KeyValuePair<long, Node> node in nodes.nodes) {
-				this.DrawNode(pe, node.Value);
-//				bool selected = this.selectedNode != null && this.selectedNode.Equals (node);
-//				node.drawOnMap (ref pe, this.pointToMap (node.location), selected);
+			foreach (Node node in nodes.nodes.Values) {
+				this.DrawNode(pe, node);
 			}
-			System.Drawing.Pen pen = new System.Drawing.Pen (Color.Blue);
-			foreach (Edge edge in edges.edges) {
-				pe.Graphics.DrawLine(pen, this.NodePointOnMap(edge.node1.left, edge.node1.top), 
-				                     this.NodePointOnMap(edge.node2.left, edge.node2.top));
+			foreach (Edge edge in edges.edges.Values) {
+				DrawEdge (edge, ref pe);
 			}
 		}
 

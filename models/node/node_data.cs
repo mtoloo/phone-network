@@ -15,6 +15,12 @@ namespace Model
 		public int inputCapacity;
 		public int outputCapacity;
 
+		public PointD point {
+			get {
+				return new PointD(left, top);
+			}
+		}
+
 		public Node (bool invalid = true)
 		{
 			this.invalid = invalid;
@@ -86,6 +92,8 @@ namespace Model
 
 		public override string ToString ()
 		{
+			if (this.invalid)
+				return "--invalid--";
 			return string.Format ("[Node: id={0}, name={1}, left={2}, top={3}]", id, name, left, top);
 		}
 
