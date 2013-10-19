@@ -1,0 +1,2 @@
+CREATE TABLE nodes(id INTEGER PRIMARY KEY AUTOINCREMENT,
+name VARCHAR, left FLOAT, top FLOAT, inputCapacity INTEGER, outputCapacity INTEGER);

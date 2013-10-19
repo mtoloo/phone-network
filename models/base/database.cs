@@ -31,6 +31,22 @@ namespace Model
 			this.Open();
 		}
 
+		public void migrate (string path)
+		{
+			string[] files = Directory.GetFiles (path, "*.sql", SearchOption.AllDirectories);
+			Array.Sort(files);
+			string[] versions = new string[0];
+			if (this.tableExists("versions"))
+				versions = this.ExecuteArray("select version from versions");
+
+			foreach (string file in files) {
+				if (Array.IndexOf(versions, file) >= 0)
+					continue;
+				this.ExecuteScript(file);
+				this.VersionAdd(file);
+			}
+		}
+
 		public void Create ()
 		{
 			SQLiteConnection.CreateFile(this.fileName);
@@ -104,6 +120,15 @@ namespace Model
 			SQLiteCommand command = this.connection.CreateCommand();
 			command.CommandText = sql;
 			return command.ExecuteScalar();
+		}
+
+		string[] ExecuteArray (string sql)
+		{
+			SQLiteDataReader dataReader = this.ExecuteReader (sql);
+			List<string> result = new List<string>();
+			while (dataReader.Read())
+				result.Add(dataReader.GetString(0));
+			return result.ToArray();
 		}
 
 		public void ExecuteScriptContent (string contents)

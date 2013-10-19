@@ -107,6 +107,53 @@ CREATE TABLE track(
 			this.database.ExecuteScriptContent(sql);
 			this.database.ExecuteNonQuery("INSERT INTO track VALUES(14, 'Mr. Bojangles', 3)");
 		}
+
+		[Test]
+		public void MigrationTest()
+		{
+			string directory = "migrations_test";
+			Directory.Delete(directory, true);
+			Directory.CreateDirectory(directory);
+			string filePath = System.IO.Path.Combine (directory, "script1.sql");
+			StreamWriter file = File.CreateText (filePath);
+			file.Write(@"create table table1 (id int); 
+				create table table2 (name string)");
+			file.Close();
+
+			this.database.migrate(directory);
+			Assert.AreEqual(filePath, this.database.ExecuteScalarQuery("select version from versions"));
+
+			this.database.ExecuteNonQuery("insert into table1 (id) values (5)");
+			Assert.AreEqual(5, this.database.ExecuteScalarQuery("select id from table1"));
+
+			this.database.ExecuteNonQuery("insert into table2 (name) values ('migration')");
+			Assert.AreEqual("migration", this.database.ExecuteScalarQuery("select name from table2"));
+
+			//database migration should not run migration twice
+			this.database.migrate(directory);
+		}
+
+		[Test]
+		public void migrateOrderTest()
+		{
+			//scripts must run in alphabetic order
+			string directory = "migrations_test";
+			Directory.Delete(directory, true);
+			Directory.CreateDirectory(directory);
+
+			string file1Path = System.IO.Path.Combine (directory, "02- script.sql");
+			StreamWriter file1 = File.CreateText (file1Path);
+			file1.Write(@"alter table table1 add name string");
+			file1.Close();
+
+			string file2Path = System.IO.Path.Combine (directory, "01- script.sql");
+			StreamWriter file2 = File.CreateText (file2Path);
+			file2.Write(@"create table table1 (id int)");
+			file2.Close();
+
+			this.database.migrate(directory);
+		}
+
 	}
 }
 

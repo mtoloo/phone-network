@@ -67,6 +67,7 @@ public class MainForm : Form
 		status.Text = "Database...";
 		this.database = new Database ("phone-network.sqlite");
 		this.database.CreateOrOpen ();
+		this.database.migrate("migrates");
 		this.nodes = new Nodes (this.database, true);
 		this.edges = new Edges (this.database, true, this.nodes);
 		this.map = new Map (this.database, this.nodes, this.edges);
@@ -84,22 +85,6 @@ public class MainForm : Form
 		status.Text = "Ready";
 	}
 
-
-//	void databaseCreateVersion1 ()
-//	{
-//		string sql = @"CREATE TABLE nodes(id INTEGER PRIMARY KEY AUTOINCREMENT,
-//name VARCHAR, left INTEGER, top INTEGER);
-//CREATE TABLE edges(id INTEGER PRIMARY KEY AUTOINCREMENT, node1_id INTEGER,
-//node2_id INTEGER, distance int, 
-// FOREIGN KEY(node1_id) REFERENCES nodes(id) ON DELETE CASCADE,
-// FOREIGN KEY(node2_id) REFERENCES nodes(id) ON DELETE CASCADE);
-//CREATE TABLE maps(id INTEGER PRIMARY KEY AUTOINCREMENT,
-//name VARCHAR, file VARCHAR, left INTEGER, top INTEGER, width INTEGER, height INTEGER);
-//";
-//		this.database.executeScriptContent(sql);
-//		this.database.versionAdd("1.0");
-//	}
-//
 
 	void LoadMap ()
 	{

@@ -5,13 +5,7 @@
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="phone-network" expanded="True">
-            <Node name="models" expanded="True">
-              <Node name="edge" expanded="True">
-                <Node name="edge_data.cs" selected="True" />
-              </Node>
-              <Node name="map" expanded="True" />
-              <Node name="node" expanded="True" />
-            </Node>
+            <Node name="dialog_result.cs" selected="True" />
           </Node>
         </State>
       </Pad>
@@ -28,10 +22,14 @@
         </State>
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True" selected="True">
+        <State expanded="True">
           <Node name="phone-network" expanded="True">
-            <Node name="Model" expanded="True" />
-            <Node name="PhoneNetwork" expanded="True" />
+            <Node name="Model" expanded="True">
+              <Node name="EdgeModelTest" expanded="True" />
+              <Node name="EdgesTest" expanded="True">
+                <Node name="deleteTest" selected="True" />
+              </Node>
+            </Node>
           </Node>
         </State>
       </Pad>
